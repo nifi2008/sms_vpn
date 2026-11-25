@@ -152,7 +152,7 @@ class MainActivity : Activity() {
     private fun edit(hintText: String, password: Boolean) = EditText(this).apply {
         hint = hintText
         textSize = 14f
-        singleLine = true
+        setSingleLine(true)
         inputType = if (password) InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                     else InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI
         setPadding(dp(12), dp(10), dp(12), dp(10))
