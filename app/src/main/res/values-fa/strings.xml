@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VPN Pay</string>
+    <string name="subtitle">ارسال پیامک‌های بانکی به سرور</string>
+
+    <string name="section_connection">تنظیمات اتصال به سرور</string>
+    <string name="label_url">آدرس سرور</string>
+    <string name="hint_url">https://example.com/sms</string>
+    <string name="label_secret">کلید محرمانه (X-Secret)</string>
+    <string name="hint_secret">کلید را از مدیر ربات کپی کنید</string>
+    <string name="label_senders">فرستنده‌های مجاز</string>
+    <string name="hint_senders">مثلاً BANK1, 30001234</string>
+    <string name="senders_help">چند فرستنده را با کاما جدا کنید. فقط پیامک این فرستنده‌ها ارسال می‌شود.</string>
+    <string name="switch_enabled">ارسال پیامک‌ها به سرور</string>
+
+    <string name="btn_save">ذخیره</string>
+    <string name="btn_test">تست اتصال</string>
+    <string name="testing">در حال تست اتصال…</string>
+    <string name="test_ok">اتصال برقرار است. سرور کلید را پذیرفت.</string>
+    <string name="test_bad_key">کلید محرمانه اشتباه است (کد 401). کلید را در دو طرف بررسی کنید.</string>
+    <string name="test_http">سرور با کد HTTP %1$d پاسخ داد. آدرس را بررسی کنید.</string>
+    <string name="test_error">به سرور نرسیدیم: %1$s</string>
+    <string name="test_need_url">ابتدا آدرس سرور را وارد کنید.</string>
+
+    <string name="section_permission">مجوز پیامک</string>
+    <string name="permission_help">اندروید برای خواندن پیامک‌های ورودی به اجازه‌ی شما نیاز دارد. دکمه را بزنید و «اجازه» را انتخاب کنید.</string>
+    <string name="btn_grant">اعطای مجوز دریافت پیامک</string>
+    <string name="permission_already">مجوز دریافت پیامک قبلاً داده شده است.</string>
+    <string name="restricted_title">مجوز پیامک مسدود است</string>
+    <string name="restricted_body">اندروید تا وقتی «تنظیمات محدودشده» را اجازه ندهید، مجوز پیامک را برای برنامه‌های خارج از Play Store مسدود می‌کند:\n\n۱. دکمه‌ی «باز کردن تنظیمات برنامه» را بزنید\n۲. از بالا سمت راست، منوی ⋮ را باز کنید\n۳. گزینه‌ی «اجازه دادن به تنظیمات محدودشده» را بزنید\n۴. به این برنامه برگردید و دوباره «اعطای مجوز دریافت پیامک» را بزنید</string>
+    <string name="btn_open_settings">باز کردن تنظیمات برنامه</string>
+    <string name="btn_cancel">انصراف</string>
+
+    <string name="section_status">وضعیت دستگاه</string>
+    <string name="status_sms">مجوز دریافت پیامک: %1$s</string>
+    <string name="status_forward">ارسال به سرور: %1$s</string>
+    <string name="status_senders">فرستنده‌های مجاز: %1$d</string>
+    <string name="granted">مجاز</string>
+    <string name="required">نیازمند مجوز</string>
+    <string name="on">فعال</string>
+    <string name="off">غیرفعال</string>
+
+    <string name="toast_saved">تنظیمات ذخیره شد.</string>
+    <string name="toast_https">آدرس سرور باید با https:// شروع شود.</string>
+    <string name="toast_missing">برای فعال‌سازی، آدرس، کلید و حداقل یک فرستنده را وارد کنید.</string>
+
+    <string name="security_note">فقط از HTTPS استفاده کنید و کلید محرمانه را به کسی ندهید. متن پیامک فقط به سرور تنظیم‌شده ارسال می‌شود و در لاگ ثبت نمی‌شود.</string>
+</resources>
