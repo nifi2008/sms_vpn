@@ -40,6 +40,7 @@ class MainActivity : Activity() {
     companion object {
         private const val REQ_SMS = 100
         private const val REQ_READ_SMS = 101
+        private const val REQ_READ_SMS_LIST = 102
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +57,10 @@ class MainActivity : Activity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQ_READ_SMS_LIST) {
+            if (readSmsGranted()) pickSenders() else showRestrictedDialog()
+            return
+        }
         if (requestCode == REQ_READ_SMS) {
             if (readSmsGranted()) sendLastSms() else showRestrictedDialog()
             return
@@ -103,6 +108,8 @@ class MainActivity : Activity() {
         connection.addView(field(getString(R.string.label_secret), secretInput))
         sendersInput = edit(getString(R.string.hint_senders), InputType.TYPE_CLASS_TEXT)
         connection.addView(field(getString(R.string.label_senders), sendersInput))
+        connection.addView(button(getString(R.string.btn_pick_senders), filled = false) { pickSenders() },
+            LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(4) })
         connection.addView(text(getString(R.string.senders_help), 12f, muted).apply { setPadding(0, dp(4), 0, dp(6)) })
         enabledSwitch = Switch(this).apply {
             text = getString(R.string.switch_enabled)
@@ -288,6 +295,50 @@ class MainActivity : Activity() {
         }
     }
 
+    /** Distinct sender names in the newest inbox messages, so the user can copy the exact one. */
+    private fun recentInboxSenders(): List<String> = try {
+        contentResolver.query(
+            Uri.parse("content://sms/inbox"),
+            arrayOf("address"),
+            null, null, "date DESC"
+        )?.use { c ->
+            val seen = LinkedHashSet<String>()
+            var n = 0
+            while (c.moveToNext() && n < 500 && seen.size < 40) {
+                c.getString(0)?.let { seen.add(it) }
+                n++
+            }
+            seen.toList()
+        } ?: emptyList()
+    } catch (e: SecurityException) {
+        emptyList()
+    }
+
+    /** Lets the user tick the senders they want from the inbox; the choice fills the Allowed senders field. */
+    private fun pickSenders() {
+        if (!readSmsGranted()) {
+            requestPermissions(arrayOf(Manifest.permission.READ_SMS), REQ_READ_SMS_LIST)
+            return
+        }
+        val list = recentInboxSenders()
+        if (list.isEmpty()) {
+            toast(R.string.pick_senders_empty)
+            return
+        }
+        val current = sendersInput.text.toString().split(",").map { it.trim() }.filter { it.isNotEmpty() }.toSet()
+        val checked = BooleanArray(list.size) { list[it] in current }
+        AlertDialog.Builder(this)
+            .setTitle(R.string.pick_senders_title)
+            .setMultiChoiceItems(list.toTypedArray<CharSequence>(), checked) { _, which, isChecked ->
+                checked[which] = isChecked
+            }
+            .setPositiveButton(R.string.btn_ok) { _, _ ->
+                sendersInput.setText(list.filterIndexed { i, _ -> checked[i] }.joinToString(", "))
+            }
+            .setNegativeButton(R.string.btn_cancel, null)
+            .show()
+    }
+
     private fun sendLastSms() {
         val url = urlInput.text.toString().trim()
         val secret = secretInput.text.toString().trim()
@@ -301,7 +352,9 @@ class MainActivity : Activity() {
         }
         val latest = findLatestSms(senders)
         if (latest == null) {
-            showSendLast(getString(R.string.send_last_none), muted)
+            val seen = recentInboxSenders()
+            val hint = if (seen.isEmpty()) "" else "\n" + getString(R.string.send_last_seen, seen.take(6).joinToString(", "))
+            showSendLast(getString(R.string.send_last_none) + hint, muted)
             return
         }
 
