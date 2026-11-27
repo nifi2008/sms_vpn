@@ -28,6 +28,8 @@ class MainActivity : Activity() {
     private lateinit var testResult: TextView
     private lateinit var statusText: TextView
     private lateinit var grantButton: Button
+    private lateinit var sendLastButton: Button
+    private lateinit var sendLastResult: TextView
 
     private val teal = Color.rgb(14, 124, 134)
     private val ink = Color.rgb(24, 40, 62)
@@ -37,6 +39,7 @@ class MainActivity : Activity() {
 
     companion object {
         private const val REQ_SMS = 100
+        private const val REQ_READ_SMS = 101
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +56,10 @@ class MainActivity : Activity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQ_READ_SMS) {
+            if (readSmsGranted()) sendLastSms() else showRestrictedDialog()
+            return
+        }
         if (requestCode != REQ_SMS) return
         refreshStatus()
         // Android 13+ often refuses silently for sideloaded apps: explain the exact setting the user must change.
@@ -128,6 +135,19 @@ class MainActivity : Activity() {
         grantButton = button(getString(R.string.btn_grant), filled = true) { requestSmsPermission() }
         permission.addView(grantButton)
         root.addView(permission, cardParams())
+
+        // Send the latest message from an allowed sender, to check the whole path
+        val sendLast = card()
+        sendLast.addView(section(getString(R.string.section_send_last)))
+        sendLast.addView(text(getString(R.string.send_last_help), 13f, muted).apply { setPadding(0, 0, 0, dp(10)) })
+        sendLastButton = button(getString(R.string.btn_send_last), filled = false) { sendLastSms() }
+        sendLast.addView(sendLastButton)
+        sendLastResult = text("", 13f, muted).apply {
+            setPadding(dp(4), dp(10), dp(4), 0)
+            visibility = View.GONE
+        }
+        sendLast.addView(sendLastResult)
+        root.addView(sendLast, cardParams())
 
         // Device status
         val status = card()
@@ -240,6 +260,80 @@ class MainActivity : Activity() {
 
     private fun openAppSettings() {
         startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName")))
+    }
+
+    // ───────── send the latest SMS (manual test) ─────────
+
+    private data class SmsItem(val sender: String, val body: String, val date: Long)
+
+    private fun readSmsGranted() =
+        checkSelfPermission(Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+
+    /** Newest inbox message whose sender is exactly one of the allowed senders. */
+    private fun findLatestSms(senders: Set<String>): SmsItem? {
+        return try {
+            contentResolver.query(
+                Uri.parse("content://sms/inbox"),
+                arrayOf("address", "body", "date"),
+                null, null, "date DESC"
+            )?.use { c ->
+                while (c.moveToNext()) {
+                    val address = c.getString(0) ?: continue
+                    if (address in senders) return SmsItem(address, c.getString(1) ?: "", c.getLong(2))
+                }
+                null
+            }
+        } catch (e: SecurityException) {
+            null
+        }
+    }
+
+    private fun sendLastSms() {
+        val url = urlInput.text.toString().trim()
+        val secret = secretInput.text.toString().trim()
+        val senders = AppSettings.allowedSenders(this)
+        if (url.isBlank()) { toast(R.string.test_need_url); return }
+        if (!url.startsWith("https://")) { toast(R.string.toast_https); return }
+        if (senders.isEmpty()) { toast(R.string.send_last_need_senders); return }
+        if (!readSmsGranted()) {
+            requestPermissions(arrayOf(Manifest.permission.READ_SMS), REQ_READ_SMS)
+            return
+        }
+        val latest = findLatestSms(senders)
+        if (latest == null) {
+            showSendLast(getString(R.string.send_last_none), muted)
+            return
+        }
+
+        sendLastButton.isEnabled = false
+        showSendLast(getString(R.string.testing), muted)
+        thread(name = "vpn-pay-send-last") {
+            val outcome: Pair<String, Int> = try {
+                val r = SmsForwarder.post(url, secret, latest.sender, latest.body, latest.date)
+                when {
+                    r.error != null -> getString(R.string.test_error, r.error) to Color.rgb(190, 40, 40)
+                    r.code == 401 -> getString(R.string.test_bad_key) to Color.rgb(190, 40, 40)
+                    r.code in 200..299 -> getString(
+                        R.string.send_last_sent,
+                        r.result ?: "-",
+                        getString(if (r.approved) R.string.yes_text else R.string.no_text)
+                    ) to Color.rgb(22, 128, 61)
+                    else -> getString(R.string.test_http, r.code) to Color.rgb(190, 40, 40)
+                }
+            } catch (e: Exception) {
+                getString(R.string.test_error, e.javaClass.simpleName) to Color.rgb(190, 40, 40)
+            }
+            runOnUiThread {
+                sendLastButton.isEnabled = true
+                showSendLast(outcome.first, outcome.second)
+            }
+        }
+    }
+
+    private fun showSendLast(message: String, color: Int) {
+        sendLastResult.text = message
+        sendLastResult.setTextColor(color)
+        sendLastResult.visibility = View.VISIBLE
     }
 
     // ───────── status ─────────
