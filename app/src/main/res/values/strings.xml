@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VPN Pay</string>
+    <string name="subtitle">Bank SMS forwarding</string>
+
+    <string name="section_connection">Server connection</string>
+    <string name="label_url">Server URL</string>
+    <string name="hint_url">https://example.com/sms</string>
+    <string name="label_secret">Secret key (X-Secret)</string>
+    <string name="hint_secret">Paste the key from the bot admin</string>
+    <string name="label_senders">Allowed senders</string>
+    <string name="hint_senders">e.g. BANK1, 30001234</string>
+    <string name="senders_help">Separate several senders with commas. Only messages from these senders are forwarded.</string>
+    <string name="switch_enabled">Forward SMS to the server</string>
+
+    <string name="btn_save">Save</string>
+    <string name="btn_test">Test connection</string>
+    <string name="testing">Testing connection…</string>
+    <string name="test_ok">Connection OK. The server accepted the key.</string>
+    <string name="test_bad_key">Wrong secret key (401). Check the key on both sides.</string>
+    <string name="test_http">The server answered with HTTP %1$d. Check the URL.</string>
+    <string name="test_error">Could not reach the server: %1$s</string>
+    <string name="test_need_url">Enter the server URL first.</string>
+
+    <string name="section_permission">SMS permission</string>
+    <string name="permission_help">Android needs your permission to read incoming SMS. Tap the button and choose Allow.</string>
+    <string name="btn_grant">Grant SMS permission</string>
+    <string name="permission_already">The SMS permission is already granted.</string>
+    <string name="restricted_title">SMS permission is blocked</string>
+    <string name="restricted_body">Android blocks SMS permission for apps installed outside the Play Store until you allow restricted settings:\n\n1. Open app settings (button below)\n2. Tap the ⋮ menu at the top right\n3. Choose \"Allow restricted settings\"\n4. Come back here and tap \"Grant SMS permission\" again</string>
+    <string name="btn_open_settings">Open app settings</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <string name="section_status">Device status</string>
+    <string name="status_sms">SMS permission: %1$s</string>
+    <string name="status_forward">Forwarding: %1$s</string>
+    <string name="status_senders">Allowed senders: %1$d</string>
+    <string name="granted">granted</string>
+    <string name="required">required</string>
+    <string name="on">on</string>
+    <string name="off">off</string>
+
+    <string name="toast_saved">Settings saved.</string>
+    <string name="toast_https">The server URL must start with https://</string>
+    <string name="toast_missing">To turn forwarding on, fill in the URL, the key and at least one sender.</string>
+
+    <string name="security_note">Use HTTPS only. Never share the secret key. Message text is sent only to the server you set and is never written to the log.</string>
+</resources>
