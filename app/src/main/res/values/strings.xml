@@ -45,4 +45,13 @@
     <string name="toast_missing">To turn forwarding on, fill in the URL, the key and at least one sender.</string>
 
     <string name="security_note">Use HTTPS only. Never share the secret key. Message text is sent only to the server you set and is never written to the log.</string>
+    <string name="section_send_last">Send the latest SMS (test)</string>
+    <string name="send_last_help">Sends the most recent message from an allowed sender to the server now, so you can check the whole path. It is processed like a live SMS.</string>
+    <string name="btn_send_last">Send latest message</string>
+    <string name="send_last_none">No message from the allowed senders was found in the inbox.</string>
+    <string name="send_last_need_senders">Add at least one allowed sender first.</string>
+    <string name="send_last_sent">Sent. Server result: %1$s (approved: %2$s)</string>
+    <string name="yes_text">yes</string>
+    <string name="no_text">no</string>
+    <string name="read_permission_help">To read the latest message, Android needs permission to read SMS. Tap Allow.</string>
 </resources>
