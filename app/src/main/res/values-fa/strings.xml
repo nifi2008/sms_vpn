@@ -54,4 +54,9 @@
     <string name="yes_text">بله</string>
     <string name="no_text">خیر</string>
     <string name="read_permission_help">برای خواندن آخرین پیامک، اندروید به مجوز خواندن پیامک نیاز دارد. «اجازه» را بزنید.</string>
+    <string name="send_last_seen">فرستنده‌های موجود در صندوق پیامک: %1$s. یکی از آن‌ها را دقیقاً در فرستنده‌های مجاز بنویسید.</string>
+    <string name="btn_pick_senders">انتخاب فرستنده از صندوق پیامک</string>
+    <string name="pick_senders_title">فرستنده‌ها را انتخاب کنید</string>
+    <string name="pick_senders_empty">هیچ فرستنده‌ای در صندوق پیامک پیدا نشد.</string>
+    <string name="btn_ok">تأیید</string>
 </resources>
