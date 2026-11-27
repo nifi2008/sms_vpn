@@ -45,4 +45,13 @@
     <string name="toast_missing">برای فعال‌سازی، آدرس، کلید و حداقل یک فرستنده را وارد کنید.</string>
 
     <string name="security_note">فقط از HTTPS استفاده کنید و کلید محرمانه را به کسی ندهید. متن پیامک فقط به سرور تنظیم‌شده ارسال می‌شود و در لاگ ثبت نمی‌شود.</string>
+    <string name="section_send_last">ارسال آخرین پیامک (تست)</string>
+    <string name="send_last_help">آخرین پیامک یکی از فرستنده‌های مجاز را همین حالا به سرور می‌فرستد تا کل مسیر بررسی شود. مثل پیامک زنده پردازش می‌شود.</string>
+    <string name="btn_send_last">ارسال آخرین پیامک</string>
+    <string name="send_last_none">در صندوق پیامک، پیامکی از فرستنده‌های مجاز پیدا نشد.</string>
+    <string name="send_last_need_senders">ابتدا حداقل یک فرستنده‌ی مجاز وارد کنید.</string>
+    <string name="send_last_sent">ارسال شد. پاسخ سرور: %1$s (تأیید شده: %2$s)</string>
+    <string name="yes_text">بله</string>
+    <string name="no_text">خیر</string>
+    <string name="read_permission_help">برای خواندن آخرین پیامک، اندروید به مجوز خواندن پیامک نیاز دارد. «اجازه» را بزنید.</string>
 </resources>
