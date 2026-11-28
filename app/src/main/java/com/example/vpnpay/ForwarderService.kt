@@ -17,6 +17,10 @@ import android.os.IBinder
  */
 class ForwarderService : Service() {
 
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(Lang.wrap(base))
+    }
+
     override fun onCreate() {
         super.onCreate()
         createChannel()
