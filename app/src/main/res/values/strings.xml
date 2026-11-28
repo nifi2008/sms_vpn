@@ -63,4 +63,13 @@
     <string name="service_title">VPN Pay is online</string>
     <string name="service_text">Watching for bank SMS and forwarding them to the server.</string>
     <string name="status_service">Background service: %1$s</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_server">Server</string>
+    <string name="tab_messages">Messages</string>
+    <string name="tab_settings">Settings</string>
+    <string name="home_forward_title">Forward bank SMS</string>
+    <string name="home_state_on">Online: messages are being forwarded</string>
+    <string name="home_state_off">Offline: forwarding is turned off</string>
+    <string name="section_language">Language</string>
+    <string name="language_help">Choose the language of the app. It applies right away.</string>
 </resources>
