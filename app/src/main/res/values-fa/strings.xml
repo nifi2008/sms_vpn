@@ -63,4 +63,13 @@
     <string name="service_title">VPN Pay آنلاین است</string>
     <string name="service_text">در حال پایش پیامک‌های بانکی و ارسال آن‌ها به سرور.</string>
     <string name="status_service">سرویس پس‌زمینه: %1$s</string>
+    <string name="tab_home">خانه</string>
+    <string name="tab_server">سرور</string>
+    <string name="tab_messages">پیامک‌ها</string>
+    <string name="tab_settings">تنظیمات</string>
+    <string name="home_forward_title">ارسال پیامک‌های بانکی</string>
+    <string name="home_state_on">آنلاین: پیامک‌ها ارسال می‌شوند</string>
+    <string name="home_state_off">خاموش: ارسال غیرفعال است</string>
+    <string name="section_language">زبان</string>
+    <string name="language_help">زبان برنامه را انتخاب کنید. بلافاصله اعمال می‌شود.</string>
 </resources>
