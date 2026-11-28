@@ -59,4 +59,8 @@
     <string name="pick_senders_title">Choose the senders</string>
     <string name="pick_senders_empty">No senders were found in the inbox.</string>
     <string name="btn_ok">OK</string>
+    <string name="service_channel">Background service</string>
+    <string name="service_title">VPN Pay is online</string>
+    <string name="service_text">Watching for bank SMS and forwarding them to the server.</string>
+    <string name="status_service">Background service: %1$s</string>
 </resources>
