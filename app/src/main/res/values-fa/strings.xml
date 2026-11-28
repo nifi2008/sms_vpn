@@ -59,4 +59,8 @@
     <string name="pick_senders_title">فرستنده‌ها را انتخاب کنید</string>
     <string name="pick_senders_empty">هیچ فرستنده‌ای در صندوق پیامک پیدا نشد.</string>
     <string name="btn_ok">تأیید</string>
+    <string name="service_channel">سرویس پس‌زمینه</string>
+    <string name="service_title">VPN Pay آنلاین است</string>
+    <string name="service_text">در حال پایش پیامک‌های بانکی و ارسال آن‌ها به سرور.</string>
+    <string name="status_service">سرویس پس‌زمینه: %1$s</string>
 </resources>
